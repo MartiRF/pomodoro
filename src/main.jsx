@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { AppPomodoro } from './AppPomodoro'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <h1>Hello my name es marti</h1>
+    <AppPomodoro />
   </React.StrictMode>,
 )
