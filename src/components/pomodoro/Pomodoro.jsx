@@ -125,12 +125,37 @@ export const Pomodoro = ({focusTime = 10, freetime = 5}) => {
   },[isFocus]);
 
   return (
-    <div>
-        <h1>{isFocus ? 'Focus time' : 'Free time'}</h1>
-        <h1>Timer: {`${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}</h1>
-        <button onClick={handleStart} disabled={isRunning}>Start</button>
-        <button onClick={handleStop} disabled={!isRunning}>Stop</button>
-        <button onClick={handlerReset}>Reset</button>
+    <div className='w-full h-screen flex flex-col justify-center items-center gap-y-4'>
+        <h1 className='text-5xl font-sans'>
+          {isFocus ? 'Focus time' : 'Free time'}
+        </h1>
+        <h1 className='font-mono text-7xl'>
+          {`${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}
+        </h1>
+
+        <div className='flex'>
+          <button 
+            className='btn_custum'
+            style={isRunning ? {display:'none'} : {display: 'block'}} 
+            onClick={handleStart} 
+            disabled={isRunning}>
+            Start
+          </button>
+          <button 
+            className='btn_custum'
+            style={!isRunning ? {display:'none'} : {display: 'block'}} 
+            onClick={handleStop} 
+            disabled={!isRunning}>
+            Stop
+          </button>
+          <button
+            className='btn_custum'
+            onClick={handlerReset}>
+            Reset
+          </button>
+        </div>
+        <div className='border-4 border-indigo-600 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-96 w-96 absolute -z-20 rounded-full'></div>
+        <div className='bg-white h-80 w-80 absolute -z-10 rounded-full'></div>
         {!isRunning && time == 0? <p>Termino</p> : null}
     </div>
   )
