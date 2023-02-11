@@ -2,5 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 .btn_custum{
-    @apply border-2 border-blue-600 rounded-2xl text-blue-600 shadow-sm p-2 m-2 text-base font-bold
+    @apply text-2xl text-center uppercase
+
 }
