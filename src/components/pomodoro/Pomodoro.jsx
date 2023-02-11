@@ -5,7 +5,7 @@ import ReactHowler from 'react-howler'
 import soundClick from '../../assets/sounds/RUST_HitSoundEffect.mp3'
 import { usePomodoro } from '../../hooks/usePomodoro'
 
-export const Pomodoro = ({focusTime = 10, freeTime = 5}) => {
+export const Pomodoro = ({focusTime = 1, freeTime = 2}) => {
 
   const {
     isClick,
@@ -19,7 +19,7 @@ export const Pomodoro = ({focusTime = 10, freeTime = 5}) => {
 		handleStart,
 		handleStop,
 		handlerReset,} = usePomodoro(focusTime,freeTime);
-
+    
   return (
     <div className='bg-white h-screen flex justify-center items-center'>
       

@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
 export const usePomodoro = (focusTime,freeTime) => {
-  
-  const [pomodoroType, setPomodoroType] = useState({
-    focusTime,
-    freeTime
-  });
+
+
+
   const [time, setTime] = useState(focusTime * 60);
   const [seconds, setSeconds] = useState(focusTime * 60);
   const [minutes, setMinutes] = useState(focusTime);
@@ -26,8 +24,10 @@ export const usePomodoro = (focusTime,freeTime) => {
   },[],);
 
 	const handlerReset = useCallback(() => {
+    // sonido
     setIsClick(true);
-    const {focusTime,freetime} = pomodoroType;
+
+    // const {focusTime,freeTime} = pomodoroType;
     if(isFocus){
       setTime(focusTime * 60)
       setSeconds(focusTime * 60)
@@ -37,10 +37,10 @@ export const usePomodoro = (focusTime,freeTime) => {
       shapeTime();
       setIsRunning(false)
     }else{
-      setTime(freetime * 60)
-      setSeconds(freetime * 60)
-      setMinutes(freetime);
-      setHours(freetime / 60)
+      setTime(freeTime * 60)
+      setSeconds(freeTime * 60)
+      setMinutes(freeTime);
+      setHours(freeTime / 60)
 
       shapeTime();
       setIsRunning(false)
@@ -60,21 +60,25 @@ export const usePomodoro = (focusTime,freeTime) => {
   }
 
 	const pomodoroFree = () => {
-    const {freetime} = pomodoroType
-    setTime(freetime * 60);
-    setSeconds(freetime * 60);
-    setMinutes(freetime);
-    setHours(freetime / 60);
-    shapeTime();
+    // console.log(freeTime)
+    setTime(freeTime * 60);
+    setSeconds(freeTime * 60);
+    setMinutes(freeTime);
+    setHours(freeTime / 60);
 
     setIsFocus(false);
-    // setIsRunning(false)
+    setIsRunning(false)
+    
+
+
+    // shapeTime();
+    
   }
 
   const pomodoroFocus = () => {
     // setIsRunning(false)
 
-    const {focusTime} = pomodoroType;
+    // const {focusTime} = pomodoroType;
 
     setTime(focusTime * 60);
     setSeconds(focusTime * 60);
@@ -100,6 +104,7 @@ export const usePomodoro = (focusTime,freeTime) => {
     };
   };
 
+  // Control de tiempo
   useEffect(() => {
     let intervalId;
     if(time === 0){
@@ -108,7 +113,7 @@ export const usePomodoro = (focusTime,freeTime) => {
     if(isRunning){
       intervalId = setInterval(() => {
         updateTimie();
-      },1000)
+      },10)
     }else if(!isRunning && time == 0){
       clearInterval(intervalId);
       //implementacion de cambio de pomodoro
