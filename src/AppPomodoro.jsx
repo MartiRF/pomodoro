@@ -1,8 +1,12 @@
-import React from 'react'
-import { Pomodoro } from './components'
+import React, { useState } from 'react'
+import { Pomodoro, Config } from './components'
+import { Modal } from './components/Modal'
 
 export const AppPomodoro = () => {
+
   return (
-    <Pomodoro />
+    <div>
+      <Pomodoro />
+    </div>
   )
 }

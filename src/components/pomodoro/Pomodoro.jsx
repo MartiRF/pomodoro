@@ -4,6 +4,7 @@ import ReactHowler from 'react-howler'
 
 import soundClick from '../../assets/sounds/RUST_HitSoundEffect.mp3'
 import { usePomodoro } from '../../hooks/usePomodoro'
+import { Config } from '../Config'
 
 export const Pomodoro = ({focusTime = 1, freeTime = 2}) => {
 
@@ -21,7 +22,7 @@ export const Pomodoro = ({focusTime = 1, freeTime = 2}) => {
 		handlerReset,} = usePomodoro(focusTime,freeTime);
     
   return (
-    <div className='bg-white h-screen flex justify-center items-center'>
+    <div className='bg-white h-screen flex justify-center items-center -z-10'>
       
       <ReactHowler 
         src={soundClick}
@@ -30,7 +31,7 @@ export const Pomodoro = ({focusTime = 1, freeTime = 2}) => {
         onEnd={() => setIsClick(false)}
       />
       <div className='flex flex-col items-center gap-2 z-30'>
-        <h3>Configuracion</h3>
+        <Config />
         <h1 className='text-4xl uppercase'>
           {isFocus ? 'Focus time' : 'Free time'}
         </h1>
@@ -40,21 +41,21 @@ export const Pomodoro = ({focusTime = 1, freeTime = 2}) => {
 
         <div className='flex w-full justify-between mt-6'>
           <button 
-            className='btn_custum'
+            className='btn_primary'
             style={isRunning ? {display:'none'} : {display: 'block'}} 
             onClick={handleStart} 
             disabled={isRunning}>
             Start
           </button>
           <button 
-            className='btn_custum'
+            className='btn_primary'
             style={!isRunning ? {display:'none'} : {display: 'block'}} 
             onClick={handleStop} 
             disabled={!isRunning}>
             Stop
           </button>
           <button
-            className='btn_custum'
+            className='btn_primary'
             onClick={handlerReset}>
             Reset
           </button>
