@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.btn_custum{
-    @apply text-2xl text-center uppercase
-
+.btn_primary{
+    @apply mt-1 flex break-words w-full mb-6 shadow-lg rounded-lg border text-xl text-justify justify-center items-center
 }
