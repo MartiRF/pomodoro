@@ -6,7 +6,8 @@ import soundClick from '../../assets/sounds/RUST_HitSoundEffect.mp3'
 import { usePomodoro } from '../../hooks/usePomodoro'
 import { Config } from '../Config'
 
-export const Pomodoro = ({focusTime = 1, freeTime = 2}) => {
+export const Pomodoro = ({config, setConfig}) => {
+  const {focusTime, freeTime} = config;
 
   const {
     isClick,
@@ -21,6 +22,8 @@ export const Pomodoro = ({focusTime = 1, freeTime = 2}) => {
 		handleStop,
 		handlerReset,} = usePomodoro(focusTime,freeTime);
     
+    useEffect(() => {
+    }, [config]);
   return (
     <div className='bg-white h-screen flex justify-center items-center -z-10'>
       
@@ -31,7 +34,7 @@ export const Pomodoro = ({focusTime = 1, freeTime = 2}) => {
         onEnd={() => setIsClick(false)}
       />
       <div className='flex flex-col items-center gap-2 z-30'>
-        <Config />
+        <Config setConfig={setConfig}/>
         <h1 className='text-4xl uppercase'>
           {isFocus ? 'Focus time' : 'Free time'}
         </h1>

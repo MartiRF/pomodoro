@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Modal } from "./Modal"
 
-export const Config = () => {
+export const Config = ({setConfig}) => {
   const [isOpen, setIsOpen] = useState(false)
   const [time, setTime] = useState({
     focus:10,
@@ -9,13 +9,14 @@ export const Config = () => {
   })
 
   const onAplicar = () => {
+    setConfig(time)
     setIsOpen(false);
   }
-//
 
   const handlerSumit = (e) => {
     e.preventDefault();
   }
+
   const handlerChange = ({target}) => {
     let {name,value} = target;
     if(value > 60 ){
@@ -27,7 +28,7 @@ export const Config = () => {
     }
     setTime(newTime)
   }
-  //
+  
   return (
     <>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>

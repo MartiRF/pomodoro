@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
 export const usePomodoro = (focusTime,freeTime) => {
-
+  console.log(focusTime,freeTime)
 
 
   const [time, setTime] = useState(focusTime * 60);
