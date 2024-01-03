@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Modal } from "./Modal"
 
 export const Config = ({setConfig}) => {
@@ -9,7 +9,11 @@ export const Config = ({setConfig}) => {
   })
 
   const onAplicar = () => {
-    setConfig(time)
+    let newTime = {
+      focus: time.focus  * 60,
+      free: time.free * 60
+    }
+    setConfig(newTime)
     setIsOpen(false);
   }
 
@@ -19,6 +23,7 @@ export const Config = ({setConfig}) => {
 
   const handlerChange = ({target}) => {
     let {name,value} = target;
+    parseInt(value)
     if(value > 60 ){
       value = 59;
     }

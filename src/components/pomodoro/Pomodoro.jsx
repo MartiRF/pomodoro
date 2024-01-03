@@ -7,39 +7,40 @@ import { usePomodoro } from '../../hooks/usePomodoro'
 import { Config } from '../Config'
 
 export const Pomodoro = ({config, setConfig}) => {
-  const {focusTime, freeTime} = config;
-
+  
   const {
-    isClick,
-		setIsClick,
-		isFocus,
-    time,
-		hours,
-		minutes,
-		seconds,
+    modePomodoro,
+    timeMain,
 		isRunning,
 		handleStart,
 		handleStop,
-		handlerReset,} = usePomodoro(focusTime,freeTime);
-    
-    useEffect(() => {
-    }, [config]);
+    setConfigMain,
+		handlerReset,} = usePomodoro(config);
+
+
+  useEffect(() => {
+    setConfigMain(config)
+  }, [config]);
+
   return (
     <div className='bg-white h-screen flex justify-center items-center -z-10'>
-      
+      {/* 
       <ReactHowler 
         src={soundClick}
         playing={isClick}
         loop={false}
         onEnd={() => setIsClick(false)}
       />
+      */}
       <div className='flex flex-col items-center gap-2 z-30'>
         <Config setConfig={setConfig}/>
         <h1 className='text-4xl uppercase'>
-          {isFocus ? 'Focus time' : 'Free time'}
+          {modePomodoro === "focus" ? 'Focus time' : 'Free time'}
         </h1>
         <h1 className='text-6xl'>
-          {`${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}
+          <span>{Math.floor(timeMain / 60)}</span>:
+          <span>{ ("0" + (timeMain % 60)).slice(-2)}</span>
+
         </h1>
 
         <div className='flex w-full justify-between mt-6'>
@@ -55,7 +56,7 @@ export const Pomodoro = ({config, setConfig}) => {
             style={!isRunning ? {display:'none'} : {display: 'block'}} 
             onClick={handleStop} 
             disabled={!isRunning}>
-            Stop
+            Pause
           </button>
           <button
             className='btn_primary'

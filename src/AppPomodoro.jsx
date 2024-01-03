@@ -3,10 +3,10 @@ import { Pomodoro } from './components'
 
 export const AppPomodoro = () => {
   const [configTime, setConfigTime] = useState({
-    focusTime: 25,
-    freeTime: 5
+    focus: 25 * 60,
+    free: 5 * 60
   })
-  //console.log(configTime)
+  
   return (
     <div>
       <Pomodoro config={configTime} setConfig={setConfigTime} />
