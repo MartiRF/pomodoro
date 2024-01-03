@@ -1,145 +1,92 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
-export const usePomodoro = (focusTime,freeTime) => {
-  console.log(focusTime,freeTime)
-
-
-  const [time, setTime] = useState(focusTime * 60);
-  const [seconds, setSeconds] = useState(focusTime * 60);
-  const [minutes, setMinutes] = useState(focusTime);
-  const [hours, setHours] = useState(focusTime / 60);
+export const usePomodoro = (config) => {
+  
+  //Recibo el tiempo en segundos
+  const [ configMain, setConfigMain ] = useState(config);
+  const [timeMain, setTimeMain] = useState(configMain.focus)
   const [isRunning, setIsRunning] = useState(false);
-  const [isFocus, setIsFocus] = useState(true);
+  const [modePomodoro, setModePomodoro] = useState("focus");
 	// sound
-  const [isClick, setIsClick] = useState(false)
+  const [isPause, setIsPause] = useState(false)
 
 	const handleStart = useCallback(() => {
     setIsRunning(true);
-    setIsClick(true)
+    setIsPause(true)
   },[],);
 
 	const handleStop = useCallback(() => {
     setIsRunning(false);
-    setIsClick(true);
+    setIsPause(true);
   },[],);
 
 	const handlerReset = useCallback(() => {
     // sonido
-    setIsClick(true);
+    setIsPause(true);
 
     // const {focusTime,freeTime} = pomodoroType;
-    if(isFocus){
-      setTime(focusTime * 60)
-      setSeconds(focusTime * 60)
-      setMinutes(focusTime);
-      setHours(focusTime / 60)
-
-      shapeTime();
+    if(modePomodoro === "focus"){
       setIsRunning(false)
-    }else{
-      setTime(freeTime * 60)
-      setSeconds(freeTime * 60)
-      setMinutes(freeTime);
-      setHours(freeTime / 60)
-
-      shapeTime();
+      setTimeMain(configMain.focus)
+    }
+    else if(modePomodoro === "free"){
       setIsRunning(false)
+      parseInt(configMain.free)
+      setTimeMain(configMain.free)
     }
-  },[isFocus],);
-
-	const shapeTime = () => {
-    if(seconds >= 59){
-      setSeconds(0)
-    }
-    if(minutes >= 59){
-      setMinutes(0)
-    }
-    if(hours < 1){
-      setHours(0)
-    }
-  }
-
+  },[modePomodoro],);
+  
 	const pomodoroFree = () => {
-    // console.log(freeTime)
-    setTime(freeTime * 60);
-    setSeconds(freeTime * 60);
-    setMinutes(freeTime);
-    setHours(freeTime / 60);
-
-    setIsFocus(false);
+    setModePomodoro("free");
+    setTimeMain(configMain.free)
     setIsRunning(false)
-    
-
-
-    // shapeTime();
-    
   }
 
   const pomodoroFocus = () => {
-    // setIsRunning(false)
-
-    // const {focusTime} = pomodoroType;
-
-    setTime(focusTime * 60);
-    setSeconds(focusTime * 60);
-    setMinutes(focusTime);
-    setHours(focusTime / 60);
-    shapeTime();
-
-    setIsFocus(true);
+    setModePomodoro("focus");
+    setTimeMain(configMain.focus)
   };
 
-  const updateTimie = () => {
-    setTime(time => time - 1);
-    setSeconds(preSeconds => preSeconds - 1)
-    if(seconds === 0){
-      setSeconds(59)
-      setMinutes(preMinutes => preMinutes - 1);
-      if(hours > 0){
-        if(minutes === 0){
-          setHours(preHours => preHours - 1)
-          setMinutes(59)
-        };
-      };
-    };
+  const updateTime = () => {
+    setTimeMain(timeMain => timeMain - 1);
   };
 
   // Control de tiempo
   useEffect(() => {
     let intervalId;
-    if(time === 0){
+    if(timeMain === 0){
       setIsRunning(false)
     };
     if(isRunning){
       intervalId = setInterval(() => {
-        updateTimie();
-      },10)
-    }else if(!isRunning && time == 0){
+        updateTime();
+        //Control del tick
+      },1000)
+    }else if(!isRunning && timeMain === 0){
       clearInterval(intervalId);
       //implementacion de cambio de pomodoro
-      isFocus ? pomodoroFree() : pomodoroFocus();
+      modePomodoro === "focus" ? pomodoroFree() : pomodoroFocus();
     };
+    //limpiar bucle
     return () => {
       clearInterval(intervalId)
     };
-  }, [time, isRunning]);
+  }, [isRunning, timeMain]);
 
   useEffect(() => {
-    shapeTime();
-  },[isFocus]);
+    setTimeMain(config.focus)
+  },[configMain]);
 
 
   return ({
-		isClick,
-		setIsClick,
-		isFocus,
-		time,
-		hours,
-		minutes,
-		seconds,
+    timeMain,
+		isPause,
+		setIsPause,
+		modePomodoro,
 		isRunning,
 		handleStart,
 		handleStop,
 		handlerReset,
+    setConfigMain
   })
 }
